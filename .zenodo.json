@@ -1,0 +1,45 @@
+{
+  "title": "Searching the recursion tree improves the lower bound on the Shannon capacity of C7",
+  "description": "<p>A lower bound &Theta;(C<sub>7</sub>) &ge; 3.258834362237710794&hellip;, improving 3.258832620353266309&hellip; (Tandon, arXiv:2608.30273), obtained from published data alone.</p><p>The recent sequence of improvements to this bound shares a common shape: a library of admissible combining rules is applied along a fixed recursion tree. The rules have been studied carefully; the tree has not. Optimising the tree gives the improvement. The construction is the Buys&ndash;Polak&ndash;Zuiddam terminal code K<sub>4a</sub> applied to four copies of S<sub>3b</sub>(n<sub>6</sub>, n<sub>11</sub>, n<sub>11</sub>), where n<sub>6</sub> and n<sub>11</sub> are Tandon's own published cardinality vectors; the only change from the published construction is that the third input is a second copy of n<sub>11</sub> rather than n<sub>8</sub>, so the ordered split 25 = 6 + 11 + 8 becomes 28 = 6 + 11 + 11 and the dimension grows from 500 to 560. Among all 16384 combinations of the three published blocks the published choice is third by value.</p><p>The deposit contains the certificate (a seven-family cardinality vector in C<sub>7</sub><sup>&boxtimes;140</sup> and the resulting 288-digit independent set in C<sub>7</sub><sup>&boxtimes;560</sup>), two dependency-free verifiers sharing no code and taking their copies of the rules from different sources (Node.js from the Lean sources of the BPZ repository, Python from the printed tables), the exhaustive search over combinations, and the census and obstruction checks behind the negative results.</p><p>The note also records what does not help, since several natural avenues can be closed exhaustively rather than merely explored: the Polak&ndash;Schrijver base gadget admits exactly eight private pairs and this is a structural ceiling; its neutral auxiliary part cannot exceed 322 over the entire automorphism orbit; bases with nine and even ten private pairs exist but are incompatible with a full-sized auxiliary set, the doubly covered region growing by about 142 forbidden vertices per additional pair; and the published twist is optimal over all 64538880 automorphisms. Two traps that internal consistency does not catch are described.</p>",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "keywords": [
+    "Shannon capacity",
+    "zero-error information theory",
+    "strong product",
+    "odd cycles",
+    "independence number",
+    "recursive constructions",
+    "combinatorics"
+  ],
+  "creators": [
+    {
+      "name": "Stavriianov, Oleksii",
+      "orcid": "0009-0002-8504-3626"
+    }
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "arXiv:2608.30273",
+      "relation": "isSupplementTo",
+      "scheme": "arxiv"
+    },
+    {
+      "identifier": "arXiv:2607.29681",
+      "relation": "references",
+      "scheme": "arxiv"
+    },
+    {
+      "identifier": "arXiv:2607.27869",
+      "relation": "references",
+      "scheme": "arxiv"
+    },
+    {
+      "identifier": "arXiv:2607.21517",
+      "relation": "references",
+      "scheme": "arxiv"
+    }
+  ]
+}

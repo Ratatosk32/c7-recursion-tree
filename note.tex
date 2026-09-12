@@ -1,0 +1,382 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{Searching the recursion tree improves the lower bound\ on the Shannon capacity of $C_7$}
+\author{Oleksii Stavriianov\ \small ORCID 0009-0002-8504-3626}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The recent sequence of improvements to the lower bound on the Shannon capacity of the seven-cycle
+shares a common shape: a library of admissible combining rules is applied along a fixed recursion
+tree. The rules have been studied carefully; the tree has not. We show that optimising the tree,
+using no data beyond what is already published, gives
+\[
+  \Theta(C_7) \;\ge\; 3.258834362237710794\ldots,
+\]
+improving the bound $3.258832620353266309\ldots$ of Tandon. The construction is
+$K_{4a}$ applied to four copies of $S_{3b}(n_6, n_{11}, n_{11})$, where $n_6$ and $n_{11}$ are
+Tandon's own published cardinality vectors and $S_{3b}$, $K_{4a}$ are rules of Buys, Polak and
+Zuiddam: the only change is that the third input is a second copy of $n_{11}$ rather than $n_8$.
+Among all $16\,384$ combinations of the three published blocks, the published choice is third
+by value.
+
+We also record what does \emph{not} help, since several natural avenues can be closed
+exhaustively rather than merely explored. The base gadget of Polak and Schrijver admits exactly
+eight private pairs and this is a structural ceiling; its neutral auxiliary part cannot exceed
+$322$ over the entire automorphism orbit; nine private pairs do exist, on other $367$-sets, but
+are incompatible with a full-sized auxiliary set, with a quantitative obstruction; and the
+published twist is optimal over all $64\,538\,880$ automorphisms. Finally we note two traps that
+internal consistency does not catch.
+\end{abstract}
+
+\section{Introduction}
+
+Shannon's zero-error capacity $\Theta(G)$~\cite{Shannon} is known for no odd cycle beyond $C_5$, where
+Lov\'asz's bound~\cite{Lovasz} settles it. For $C_7$ the gap remains wide: the best upper bound is still
+$\vartheta(C_7) = 3.3176672\ldots$, while the lower bound has been improved four times in the
+space of two months, each time in the seventh significant digit.
+
+The improvements share a structure. One fixes a base object in $C_7^{\boxtimes 5}$, a set of
+admissible rules for combining such objects, and a recursion tree describing which rule is applied
+to which intermediates. Itty, Rosin, Carstensen and Reichman found a $134\,753$-element independent set in
+$C_7^{\boxtimes 10}$~\cite{Itty}; Gao recast it as a binary product lemma over
+gadgets built from the $367$-set of Polak and Schrijver~\cite{PS} and reached
+$3.2587891539\ldots$~\cite{Gao}; Buys, Polak and Zuiddam (BPZ)~\cite{BPZ1,BPZ2} replaced the six numbers of a Gao gadget by
+seven families with prescribed separations, verified a library of ten combining rules and three
+terminal codes in Lean, and reached $3.2588279859\ldots$; Tandon added a heterogeneous refinement
+of the binary product and reached $3.2588326203\ldots$~\cite{Tandon}.
+
+In every one of them the recursion tree is fixed by hand. Tandon is explicit: the ordered split
+$25 = 6 + 11 + 8$, the rule $S_{3b}$ and the terminal code $K_{4a}$ are kept unchanged from BPZ,
+and only the representations sitting at the nodes are replaced. The rules have been scrutinised;
+the tree has not been searched.
+
+This note searches it. The result is a better bound obtained from published data alone, and --
+more usefully -- evidence that the tree is a systematically underexploited parameter rather than a
+lucky one.
+
+
+\paragraph{Scope.}
+The improvement is in the seventh significant digit, as were the four before it, and the distance
+to the upper bound is unaffected: $\vartheta(C_7) - \Theta(C_7)$ is still bounded only by
+$2.9 \times 10^{-2}$, four orders of magnitude larger than everything this line of work has gained
+in total. Nor is the construction deep. It is one substitution in someone else's recursion, and
+stating it here makes it reproducible in an afternoon by anyone holding the same data; we expect
+it to be superseded quickly, and by the authors whose data it uses. What we hope survives is the
+observation that the tree is a free parameter, which applies to whatever construction comes next,
+and the exhaustive verifications of Section~5, which close doors rather than open them but were
+expensive to establish and are cheap to reuse.
+
+\section{The BPZ framework, briefly}
+
+We use the seven-family formulation of BPZ~\cite{BPZ2} as presented by Tandon~\cite{Tandon}. Let
+$L = \{B, N, A, D, O, H, V\}$ carry the symmetric separation relation $\perp$ given by
+$B \perp \{O,H,V\}$, $N \perp \{A,D,O,H,V\}$, $A \perp \{N,D,H\}$, $D \perp \{N,A,V\}$,
+$O \perp \{B,N\}$, $H \perp \{B,N,A\}$, $V \perp \{B,N,D\}$. A \emph{seven-family
+representation} in a graph $G$ is a collection $F = \{F_\lambda\}_{\lambda \in L}$ of independent
+sets with $F_\lambda$ separated from $F_\mu$ whenever $\lambda \perp \mu$, and its
+\emph{cardinality vector} is $(|F_B|, \ldots, |F_V|)$ in the order $(B,N,A,D,O,H,V)$.
+
+An $m$-ary \emph{combining rule} is a family $T = \{T_\lambda\}$ with $T_\lambda \subseteq L^m$,
+admissible when any two words of one component are separated in some coordinate and words of
+components with separated labels are too. For admissible $T$ and representations
+$F^{(1)}, \ldots, F^{(m)}$ the sets
+$F^{\mathrm{out}}_\lambda = \bigcup_{(\lambda_1,\ldots,\lambda_m) \in T_\lambda}
+ F^{(1)}_{\lambda_1} \times \cdots \times F^{(m)}_{\lambda_m}$
+form a representation in the strong product, with
+\begin{equation}\label{eq:card}
+  |F^{\mathrm{out}}_\lambda| \;=\; \sum_{(\lambda_1,\ldots,\lambda_m) \in T_\lambda}
+  \prod_{i=1}^m |F^{(i)}_{\lambda_i}|.
+\end{equation}
+A \emph{terminal code} is a set of $m$-tuples whose Cartesian products are pairwise separated; its
+union is a single independent set, of size given by the same formula. The BPZ library holds ten
+combining rules $S_{2a}, S_{2b}, S_{3a}, \ldots, S_{3h}$ and three terminal codes
+$K_{3a}, K_{4a}, K_{4b}$, all verified admissible in Lean. Gao's binary product is the rule
+$S_{2a}$.
+
+Nothing in \eqref{eq:card} requires the inputs to be distinct. This is not a loophole: the
+published constructions already use it, applying $K_{4a}$ to four copies of one representation.
+
+\section{The improvement}
+
+Tandon's Appendix B.4~\cite{Tandon} prints three cardinality vectors, of representations in
+$C_7^{\boxtimes 30}$, $C_7^{\boxtimes 55}$ and $C_7^{\boxtimes 40}$ respectively:
+\[
+  n_6, \qquad n_{11}, \qquad n_8,
+\]
+and forms $n_{25} = S_{3b}(n_6, n_{11}, n_8)$, a representation in $C_7^{\boxtimes 125}$, then
+applies $K_{4a}$ to four copies to obtain an independent set in $C_7^{\boxtimes 500}$ of $257$
+digits, giving $3.258832620353266309\ldots$.
+
+\begin{theorem}\label{thm:main}
+Let $v = S_{3b}(n_6, n_{11}, n_{11})$ and let $M = K_{4a}(v,v,v,v)$. Then $M$ is the cardinality
+of an independent set in $C_7^{\boxtimes 560}$, it has $288$ digits, and
+\[
+  \Theta(C_7) \;\ge\; M^{1/560} \;=\; 3.258834362237710794\ldots
+\]
+\end{theorem}
+
+\begin{proof}
+$n_6$ and $n_{11}$ are cardinality vectors of seven-family representations in
+$C_7^{\boxtimes 30}$ and $C_7^{\boxtimes 55}$; $S_{3b}$ is an admissible ternary combining rule
+and $K_{4a}$ an admissible terminal code, both from the Lean-verified BPZ library. By
+\eqref{eq:card}, $v$ is the cardinality vector of a representation in
+$C_7^{\boxtimes 30+55+55} = C_7^{\boxtimes 140}$, and $K_{4a}$ applied to four copies of it gives
+an independent set in $C_7^{\boxtimes 560}$. The arithmetic is elementary and exact; the value is
+recorded in Appendix~A.
+\end{proof}
+
+The only difference from the published construction is the third input. The split
+$28 = 6 + 11 + 11$ replaces $25 = 6 + 11 + 8$, and the dimension grows from $500$ to $560$.
+
+\section{The tree is a systematically underexploited parameter}
+
+One improvement could be luck. Three observations suggest otherwise.
+
+\paragraph{The published choice is not the best among its own inputs.}
+Drawing three blocks with repetition from $\{n_6, n_8, n_{11}\}$ and the base, in both
+orientations, under all eight ternary rules and all three terminal codes, and also reading each
+product directly as an independent set of size $|F_B| + |F_O|$, gives $16\,384$ candidates. The
+ranking begins
+
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+construction & dimension & bound \\
+\midrule
+$K_{4a}(S_{3b}(n_6, n_{11}, n_{11}))$ & $560$ & $3.2588343622377$ \\
+$K_{4a}(S_{3b}(n_8, n_{11}, n_{11}))$ & $600$ & $3.2588331674194$ \\
+$K_{4a}(S_{3b}(n_6, n_{11}, n_8))$ (published) & $500$ & $3.2588326203533$ \\
+$K_{4a}(S_{3b}(n_{11}, n_{11}, n_{11}))$ & $660$ & $3.2588323392139$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Only two distinct values stand above the published combination, so it is third by value; among
+the $16\,384$ candidates individually it is ninth, because the top value is attained four times.
+Those four are $S_{3b}$ and $S_{3h}$, each on $n_6$ and on its orientation reversal, and they do not
+merely agree to the printed digits: the four seven-family vectors differ, in the $A$ and $D$
+coordinates, yet $K_{4a}$ returns the same $288$-digit integer for all of them. The bound is a
+property of the tree, not of the particular rule or orientation that realises it.
+
+\paragraph{The gain is not monotone.}
+Using the strongest block three times is \emph{worse} than the record. The improvement is a
+property of the mixture, not of block quality, which is why it is invisible to an argument of the
+form ``use the best available piece''.
+
+\paragraph{Order matters, and by more than the margin being contested.}
+On the published split, permuting the three arguments of $S_{3b}$ costs up to
+$2.3 \times 10^{-6}$ -- more than half of the $4.6 \times 10^{-6}$ by which the heterogeneous
+refinement improved on BPZ. A parameter with that much leverage is worth searching.
+
+\paragraph{Iteration does not compound.}
+Feeding the result back, $X \mapsto S_{3b}(n_6, X, X)$, gains at the first step and loses
+thereafter: $3.2588343622$, then $3.2588110347$, then $3.2587875577$. The recursion has an
+interior optimum, so depth alone is not the lever either. Likewise, applying a terminal code to
+four \emph{distinct} representations was in every case we tried worse than four copies of the
+best one, which is what one expects of a geometric mean.
+
+\section{What does not help}
+
+Several natural directions can be closed exhaustively rather than merely explored. We record them
+because each cost real effort and each is cheap to state.
+
+\paragraph{The base gadget admits exactly eight private pairs.}
+For the $367$-set $I$ of Polak and Schrijver~\cite{PS} in $C_7^{\boxtimes 5}$, a private pair needs a vertex
+$q \neq r$ with $N[q] \cap I = \{r\}$. Exactly eight members of $I$ own such a vertex, each owning
+exactly one, and they are precisely the eight pairs in use. So $t = 8$ is a structural ceiling for
+this set, not an artefact of search. At dimension ten the count is likewise exactly $5152$, which
+is what the recursion already delivers.
+
+\paragraph{The neutral part cannot exceed $322$ over the whole orbit.}
+Write $U$ for the closed neighbourhood of the sixteen pair endpoints; then $o = |X| - |X \cap U|$,
+and $U$ does not depend on the choice of transversals. One more neutral point, $o = 323$, would
+suffice to beat the record by squaring alone. Applying every automorphism of $C_7^{\boxtimes 5}$
+to $I$ while holding $X$ fixed -- all $5! \cdot 2^5 \cdot 7^5 = 64\,538\,880$ of them -- and
+imposing the condition $X \cap N[P^H] \cap N[P^V] = \emptyset$, no image reaches $o = 323$.
+A separate walk of four million size-preserving exchanges on $X$ at fixed $|X| = 367$ also never
+exceeded $322$.
+
+\paragraph{Nine private pairs exist but are unusable.}
+Iterated local search produced $65$ distinct $367$-sets in $C_7^{\boxtimes 5}$. Their private-pair
+counts run from $t = 5$ to $t = 10$: two, twenty-one, sixteen, nineteen, six and one respectively.
+A ninth pair would be worth a great deal: at $s = 367$ any $o \ge 311$ beats the record, and the
+nine-pair bases offer $315$ to $317$. They are nonetheless unusable, and the obstruction is
+quantitative. The doubly covered region $D = N[P^H] \cap N[P^V]$, which the auxiliary set must
+avoid, grows by almost exactly the same amount with each extra pair. Over all legal splits of
+every base we hold, its size runs $956$ to $988$ for the nineteen eight-pair bases -- the
+published $X$ dodges one of size $956$ -- then $1098$ to $1128$ for the six with nine pairs, and
+$1240$ to $1268$ for the single base with ten. That is about $142$ further forbidden vertices per
+pair, three times over, which makes the obstruction look structural rather than incidental, and
+closes the ten-pair base for the same reason as the nine-pair ones. Sweeping the whole
+automorphism group against a nine-pair base -- all $64\,538\,880$ images, so the entire orbit,
+against thirty-two orbit representatives as auxiliary set -- no image satisfies the disjointness
+condition. At $|X| = 366$ the pairs are
+available but then $o \ge 338$ would be needed, which is out of reach; the question is binary and
+it answers no.
+
+\paragraph{The published twist is optimal.}
+The heterogeneous step reads $q = |J \setminus N(X^0)|$ for a codebook $J$, and an automorphic
+image of an independent set is again one, so the twist is free. Sweeping all $64\,538\,880$
+automorphisms, the published choice maximises $q/|J|$ at dimensions $10$, $15$, $20$ and $25$ --
+strictly, at every one of them.
+
+\paragraph{The rule library is saturated where it matters.}
+Admissibility is two local conditions, so one can ask whether the published rules can be extended.
+No word can be added to the $B, N, A, D, H$ or $V$ component of any rule. The $O$ component is not
+saturated -- $S_{3a}$ extends from four words to seven, $S_{3b}$ from none to four, five rules
+from none to nine -- but this buys nothing, because no terminal code reads the label $O$, and no
+component other than $O$ takes $O$ as input. Saturating $O$ and rerunning the published recursion
+reproduces the published number to the last digit. The three terminal codes admit no extension at
+all. Randomly generated admissible rules, including four-input rules, which the library does not
+contain, are far worse than the published ones.
+
+\paragraph{The library is not closed under the orientation involution.}
+Exchanging $A \leftrightarrow D$ and $H \leftrightarrow V$ is an automorphism of the separation
+relation, so the conjugate of an admissible rule is admissible. Only $S_{2a}$ and $S_{3a}$ are
+self-conjugate: the conjugates of the other eight rules and of all three terminal codes are
+admissible but absent. A search that tries both orientations of every input covers them
+implicitly.
+
+\section{Two traps that internal consistency does not catch}
+
+Both cost us a day, and both produced numbers that looked like records.
+
+\paragraph{The class rule is a theorem only for homogeneous products.}
+Tracking which vertices lie in $N[X^0]$ under a product is needed to propagate $q$. For the
+homogeneous product the rule
+\[
+  i(u,w) = (i_u \wedge i_w) \vee (j_u \wedge j_w), \qquad
+  j(u,w) = (j_u \wedge i_w) \vee (i_u \wedge j_w)
+\]
+is a three-line theorem: $N[(u,w)] = N[u] \times N[w]$, a rectangle $A \times B$ is met exactly
+when $u$ meets $N[A]$ and $w$ meets $N[B]$, and $X^0$ of the product is the union of two
+rectangles. For the heterogeneous product the neutral part is built from a different rectangle,
+whose left factor is the escaping part of the codebook, so the rule needs a different predicate
+$E$. On the base gadget $E$ differs from $j$ on $5589$ of $16807$ vertices. The arithmetic of the
+wrong rule is perfectly self-consistent, and the identity $s = o + h + v$ holds throughout.
+Recomputing in exact integers does not help: exact arithmetic of a wrong formula stays wrong.
+
+Moreover the predicate $E$ does not close in any bounded class space. Refining the partition of
+$C_7^{\boxtimes 5}$ by the predicates it generates reaches a fixed point at $16\,776$ classes
+among $16\,807$ vertices; the class degenerates to the vertex. This explains why $q_{10}$ and
+$q_{15}$ appear in the literature as computed constants rather than as terms of a recursion.
+
+\paragraph{Check against the upper bound.}
+A search that allowed a fifteen-dimensional codebook to serve a ten-dimensional left gadget --
+an independent set of $49\,495\,055$ vertices in a graph whose independence number is at most
+$134\,753$ -- produced $4.11$, with every internal invariant satisfied. Only comparison with
+$\vartheta(C_7) = 3.3176672$ exposed it. In a framework where all the arithmetic is sums of
+products of non-negative integers, a wrong object does not announce itself; the upper bound is the
+cheapest independent alarm available.
+
+\section{Verification}
+
+Everything was computed twice, by implementations sharing no code.
+
+The first is in JavaScript. It parses the rule library from the Lean sources of the BPZ
+repository at the commit Tandon names, checks that each rule carries the number of words the paper
+states and that each satisfies both admissibility conditions, and implements \eqref{eq:card} in
+arbitrary-precision integers.
+
+The second is in Python. Its copies of $S_{3b}$ and $K_{4a}$ are typed from the printed tables of
+Tandon's Appendix A, not from the machine-readable sources, and it implements the cardinality map
+independently.
+
+Both are checked against the published construction before being used on ours: each reproduces
+Tandon's $n_{25}$ in all seven coordinates and his $257$-digit $M$ exactly, and hence his stated
+bound. On the construction of Theorem~\ref{thm:main} they agree on a $288$-digit integer and on
+\[
+  M^{1/560} = 3.258834362237710794\ldots
+\]
+As a sanity check the value lies below $\vartheta(C_7)$, as any lower bound must.
+
+Two further points of external agreement are worth recording, as they were obtained
+independently of the paper and only afterwards compared with it. Computing the region split of
+the dimension-ten gadget directly from its explicit vertex sets gives $h = 12\,236$,
+$v = 16\,744$, which is what Tandon's Table 6 lists; and $|X_{10} \setminus N(X^0_{10})| =
+134\,689 - 105\,709 = 28\,980$ likewise agrees.
+
+\section*{Reproducibility and assistance}
+
+The certificate, both verification scripts and the search of Section~4 are included in this
+deposit. The rule library is anchored to commit
+\texttt{aa21eeb12b75b041}\allowbreak\texttt{3d3fa9fb4208b5d0bf2c4d65} of the BPZ Lean repository, as in Tandon's
+paper.
+
+The search over recursion trees, the exhaustive verifications of Section~5 and the two
+implementations were carried out with the assistance of a large language model. All results are
+reproducible from the scripts and certificates supplied; the Python verification was written
+independently of the search code and from the printed rule tables rather than from the
+machine-readable sources, so that it does not share the assumptions of the code that produced the
+result.
+
+\begin{thebibliography}{9}
+\bibitem{Shannon} C.~E. Shannon, The zero error capacity of a noisy channel,
+  \emph{IRE Trans. Inform. Theory} \textbf{2} (1956), 8--19.
+\bibitem{Lovasz} L.~Lov\'asz, On the Shannon capacity of a graph,
+  \emph{IEEE Trans. Inform. Theory} \textbf{25} (1979), 1--7.
+\bibitem{PS} S.~C. Polak and A.~Schrijver, New lower bound on the Shannon capacity of $C_7$ from
+  circular graphs, \emph{Inform. Process. Lett.} \textbf{143} (2019), 37--40.
+\bibitem{Itty} N.~Itty, C.~D. Rosin, C.~Carstensen and D.~Reichman, Improved lower bounds for the
+  Shannon capacity of odd cycles, arXiv:2607.21517.
+\bibitem{Gao} Y.~Gao, A recursive construction improving the lower bound on the Shannon capacity
+  of $C_7$, arXiv:2607.27869.
+\bibitem{BPZ1} P.~Buys, S.~Polak and J.~Zuiddam, Lean-verified lower bounds for the Shannon
+  capacity of odd cycles, arXiv:2607.29681.
+\bibitem{BPZ2} P.~Buys, S.~Polak and J.~Zuiddam, Lean-verified lower bounds for the Shannon
+  capacity of odd cycles, updated version carrying the multi-gadget framework; Lean repository
+  at commit \texttt{aa21eeb12b75b041}\allowbreak\texttt{3d3fa9fb4208b5d0bf2c4d65}.
+\bibitem{Tandon} R.~Tandon, Strengthening recursive constructions for zero-error Shannon capacity,
+  arXiv:2608.30273.
+\end{thebibliography}
+
+\appendix
+\section{The certificate}
+
+The cardinality vector $v = S_{3b}(n_6, n_{11}, n_{11})$ of a seven-family representation
+in $C_7^{\boxtimes 140}$, in the order $(B,N,A,D,O,H,V)$. The zero in the $O$ coordinate
+reflects $T^{(3b)}_O = \emptyset$, as in the published construction.
+
+{\small\begin{verbatim}
+F_B = 630253135055981401870713517244555479224707417188321589099630892251191137
+F_N = 144695722184541768107720115813414797839355308000072965335422489005149364
+F_A = 234597357441727401048883289845530873859970864445720627213945096783673569
+F_D = 279954818401127974982259955129730445935176686603744292186306152889419948
+F_O = 0
+F_H = 43369967591254229190937078233276375615707839828850482473899658380862816
+F_V = 43369967591254229190937078233276375615707839828850482473899658380862816
+\end{verbatim}}
+
+Applying $K_{4a}$ to four copies gives an independent set in $C_7^{\boxtimes 560}$ whose
+cardinality has $288$ digits:
+
+{\small\begin{verbatim}
+20648129955823938354627223642277723610774954309518268857043903735102296965
+39692406790071877020909818803770098048843510624763953396835623197404041433
+74478908724579606022957152596859036287499885258150979930066394024808709850
+012732304675637453738651340534438147137232028524828404364024830721
+\end{verbatim}}
+
+Hence
+\[
+  \Theta(C_7) \;\ge\; M^{1/560} \;=\; 3.258834362237710794\ldots,
+\]
+against $3.258832620353266309\ldots$ for the published construction. To thirty places the
+value is $3.258834362237710794353262972358$.
+
+\end{document}
