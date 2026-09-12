@@ -188,6 +188,23 @@ console.log('       squaring the published profile gives ' + at322.toFixed(10) +
 check('o = 322 does not reach the record by squaring alone', at322 < RECORD);
 check('o = 323 would beat the record by squaring alone', at323 > RECORD);
 
+// The two thresholds quoted for a nine-pair base. h and v share whatever X leaves after the
+// neutral part; the split barely moves the rate, so take it even.
+const nineRate = (s, no) => {
+  const rest = s - no, h = Math.floor(rest / 2);
+  return squaringLimit({ a: 367, t: 9, s, o: no, h, v: rest - h, dim: 5 });
+};
+const firstBeating = (s) => { for (let no = 280; no <= s; no++) if (nineRate(s, no) > RECORD) return no; return null; };
+const th367 = firstBeating(367), th366 = firstBeating(366);
+console.log('       for a nine-pair base: at s = 367 the record needs o >= ' + th367 +
+  ';  at s = 366 it needs o >= ' + th366);
+check('at s = 367 any o >= 311 beats the record', th367 === 311, 'threshold ' + th367);
+check('at s = 366 one would need o >= 338', th366 === 338, 'threshold ' + th366);
+check('the 315 to 317 the nine-pair bases reach falls short at s = 366',
+  [315, 316, 317].every((no) => nineRate(366, no) < RECORD));
+check('the same 315 to 317 would suffice at s = 367, which is why the pairs matter',
+  [315, 316, 317].every((no) => nineRate(367, no) > RECORD));
+
 // ---------------------------------------------------------------- the sweeps
 
 if (!FULL) {
