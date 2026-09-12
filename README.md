@@ -98,6 +98,7 @@ automorphism group of `C₇^⊠5`.
 ## Files
 
     note.tex          the accompanying note, self-contained LaTeX
+    note.pdf          the same note, compiled
     certificate.txt   the seven-family vector and the 288-digit independent set, as plain text
     verify.mjs        verification in JavaScript, rules from the Lean sources
     verify.py         verification in Python, rules from the printed tables
