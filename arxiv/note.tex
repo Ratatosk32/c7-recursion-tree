@@ -76,8 +76,9 @@ lucky one.
 The improvement is in the seventh significant digit, as were the four before it, and the distance
 to the upper bound is unaffected: $\vartheta(C_7) - \Theta(C_7)$ is still bounded only by
 $2.9 \times 10^{-2}$, four orders of magnitude larger than everything this line of work has gained
-in total. Nor is the construction deep. It is one substitution in someone else's recursion, and
-stating it here makes it reproducible in an afternoon by anyone holding the same data; we expect
+in total. Nor is the construction deep. It is one substitution in someone else's recursion,
+standing on the heterogeneous refinement that produced the blocks it recombines, and stating it
+here makes it reproducible in an afternoon by anyone holding the same data; we expect
 it to be superseded quickly, and by the authors whose data it uses. What we hope survives is the
 observation that the tree is a free parameter, which applies to whatever construction comes next,
 and the exhaustive verifications of Section~5, which close doors rather than open them but were
@@ -123,6 +124,13 @@ $C_7^{\boxtimes 30}$, $C_7^{\boxtimes 55}$ and $C_7^{\boxtimes 40}$ respectively
 and forms $n_{25} = S_{3b}(n_6, n_{11}, n_8)$, a representation in $C_7^{\boxtimes 125}$, then
 applies $K_{4a}$ to four copies to obtain an independent set in $C_7^{\boxtimes 500}$ of $257$
 digits, giving $3.258832620353266309\ldots$.
+
+These three vectors are themselves the output of his heterogeneous recursion, and it is worth
+being precise about what follows. The construction below introduces no new heterogeneous step,
+and no propagation of the auxiliary data through one; but it rests entirely on the
+representations that the heterogeneous refinement produced. It is a better recombination of
+his objects, not an alternative to them, and without that refinement there would be nothing
+here to recombine.
 
 \begin{theorem}\label{thm:main}
 Let $v = S_{3b}(n_6, n_{11}, n_{11})$ and let $M = K_{4a}(v,v,v,v)$. Then $M$ is the cardinality
