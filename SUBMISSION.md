@@ -100,7 +100,7 @@ internal consistency does not catch.
 ```
 7 pages. Certificate, two independent dependency-free verifiers, the exhaustive search and the
 Section 5 checks included as ancillary files. Code and data at
-https://github.com/Ratatosk32/c7-recursion-tree, archived at doi:10.5281/zenodo.22727744
+https://github.com/Ratatosk32/c7-recursion-tree, archived at doi:10.5281/zenodo.22727743
 ```
 
 **Primary category**

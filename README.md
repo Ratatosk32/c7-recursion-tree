@@ -1,6 +1,6 @@
 # Searching the recursion tree improves the lower bound on the Shannon capacity of C₇
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22727744.svg)](https://doi.org/10.5281/zenodo.22727744)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22727743.svg)](https://doi.org/10.5281/zenodo.22727743)
 
     Θ(C₇) ≥ 3.258834362237710794…
 
@@ -121,7 +121,7 @@ were expensive to establish and are cheap to reuse.
 ## Cite
 
     Oleksii Stavriianov, "Searching the recursion tree improves the lower bound on the
-    Shannon capacity of C7", Zenodo, 2026. doi:10.5281/zenodo.22727744
+    Shannon capacity of C7", Zenodo, 2026. doi:10.5281/zenodo.22727743
 
 ## Related
 
